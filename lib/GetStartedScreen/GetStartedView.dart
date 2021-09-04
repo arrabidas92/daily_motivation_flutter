@@ -1,3 +1,4 @@
+import 'package:daily_motivation_flutter/DailyMotivationReminderScreen/DailyMotivationReminderView.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -128,7 +129,7 @@ class GetStartedWidget extends StatelessWidget {
       height: 40,
       width: double.infinity,
       child: ElevatedButton(onPressed: () => {
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DailyMotivationReminderView()))
       }, child: Text(
           'Get started'
       ), style: ElevatedButton.styleFrom(
