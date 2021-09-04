@@ -48,11 +48,11 @@ class BottomWidget extends StatelessWidget {
       child: Column(
         children: [
           const Spacer(flex: 1),
-          const SelfTextWidget('Self care.'),
+          SelfTextWidget('Self care.', 1),
           const SizedBox(height: 8),
-          const SelfTextWidget('Self love.'),
+          SelfTextWidget('Self love.', 2),
           const SizedBox(height: 8),
-          const SelfTextWidget('Self growth.'),
+          SelfTextWidget('Self growth.', 3),
           const Spacer(flex: 1),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 32),
@@ -65,22 +65,54 @@ class BottomWidget extends StatelessWidget {
   }
 }
 
-class SelfTextWidget extends StatelessWidget {
+class SelfTextWidget extends StatefulWidget {
   final String text;
+  final int duration;
 
-  const SelfTextWidget(this.text);
+  SelfTextWidget(this.text, this.duration);
+
+  @override
+  _SelfTextWidgetState createState() {
+    return _SelfTextWidgetState(text, duration);
+  }
+}
+
+class _SelfTextWidgetState extends State<SelfTextWidget> {
+  final String text;
+  final int duration;
+  double opacity = 0.0;
+
+  _SelfTextWidgetState(this.text, this.duration);
+
+  _showWidget() {
+    Future.delayed(Duration(seconds: duration), () {
+      setState(() {
+        opacity = 1.0;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _showWidget();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyle(
-              decoration: TextDecoration.none,
-              color: Colors.black87,
-              fontSize: 30,
-              fontFamily: 'Calibri'
+        child: AnimatedOpacity(
+          opacity: opacity,
+          duration: Duration(seconds: 1),
+          child: Text(
+            text,
+            style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Colors.black87,
+                fontSize: 30,
+                fontFamily: 'Calibri'
+            ),
           ),
         )
     );
