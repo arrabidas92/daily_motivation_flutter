@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//TODO:Continue UI implementation with text Set daily motivation reminders
+
+//TODO:Continue UI implementation with state for daily reminders
+
 class DailyMotivationReminderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,10 @@ class TopWidget extends StatelessWidget {
         flex: 1,
         child: Stack(
           children: [
-            Image.asset('assets/images/second_onboarding.png'),
+            Image.asset(
+              'assets/images/second_onboarding.png',
+              height: MediaQuery.of(context).size.height * 0.5,
+            ),
             const MotivationReminderWidget()
           ],
         )
@@ -43,7 +48,7 @@ class MotivationReminderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: 40,
+        top: 84,
         left: 32,
         right: 32,
         child: Container(
@@ -121,10 +126,118 @@ class BottomWidget extends StatelessWidget {
           alignment: Alignment.center,
           child: Column(
             children: [
-
+              Text(
+                'Set daily Motivation reminders.',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 24,
+                    fontFamily: 'Calibri'
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(8)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'How many',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Calibri',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: MotivationReminderStepper(),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(8)
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(8)
+                ),
+              )
             ],
           ),
         )
+    );
+  }
+}
+
+class MotivationReminderStepper extends StatefulWidget {
+  MotivationReminderStepper();
+
+  @override
+  _MotivationReminderStepperState createState() {
+    return _MotivationReminderStepperState();
+  }
+}
+
+class _MotivationReminderStepperState extends State<MotivationReminderStepper> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        StepperWidget(Icons.remove),
+        SizedBox(width: 32),
+        Text(
+          '10x',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+            fontFamily: 'Calibri'
+          ),
+        ),
+        SizedBox(width: 32),
+        StepperWidget(Icons.add),
+        SizedBox(width: 8)
+      ],
+    );
+  }
+}
+
+class StepperWidget extends StatelessWidget {
+  final IconData iconData;
+
+  const StepperWidget(this.iconData);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 32,
+        width: 32,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.black, width: 1)
+        ),
+        child: Icon(iconData, color: Colors.black)
     );
   }
 }
